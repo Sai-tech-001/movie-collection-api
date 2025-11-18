@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>My Movie Collection</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <h1>My Movie Collection</h1>
+    <p>Browse the movies using the buttons below.</p>
+
+    <div class="buttons">
+        <button id="allBtn">View All Movies</button>
+        <button id="classicBtn">View Classic Movies</button>
+        <button id="genreBtn">View Genres</button>
+    </div>
+
+    <div id="output"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+
+style.css body { font-family: Arial, sans-serif; padding: 20px; } .buttons { margin-bottom: 20px; } button { margin-right: 10px; padding: 10px 15px; cursor: pointer; } #output .movie, #output .genre { border: 1px solid #ccc; padding: 15px; margin-bottom:
+10px; border-radius: 5px; } .classic { background-color: gold; color: black; padding: 3px 6px; border-radius: 3px; font-size: 12px; } script.js const output = document.getElementById("output"); document.getElementById("allBtn").addEventListener("click",
+() => { fetch("/movies") .then(res => res.json()) .then(data => displayMovies(data)) .catch(() => showError()); }); document.getElementById("classicBtn").addEventListener("click", () => { fetch("/movies/classics") .then(res => res.json()) .then(data =>
+displayMovies(data)) .catch(() => showError()); }); document.getElementById("genreBtn").addEventListener("click", () => { fetch("/movies/genres") .then(res => res.json()) .then(data => displayGenres(data.genres)) .catch(() => showError()); }); function
+displayMovies(movies) { output.innerHTML = ""; movies.forEach(movie => { const div = document.createElement("div"); div.className = "movie"; div.innerHTML = `
+<h3>${movie.title} ${movie.isClassic ? '<span class="classic">Classic</span>' : ''}</h3>
+<p><strong>Genre:</strong> ${movie.genre}</p>
+<p><strong>Release Year:</strong> ${movie.releaseYear}</p>
+<p><strong>Director:</strong> ${movie.director}</p>
+`; output.appendChild(div); }); } function displayGenres(genres) { output.innerHTML = ""; genres.forEach(g => { const div = document.createElement("div"); div.className = "genre"; div.innerHTML = `
+<h3>${g.name}</h3>
+<p>Movies: ${g.movieCount}</p>
+`; output.appendChild(div); }); } function showError() { output.innerHTML = "
+<p>Error loading data.</p>"; }
