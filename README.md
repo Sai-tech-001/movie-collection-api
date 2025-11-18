@@ -141,9 +141,22 @@ Data displayed using fetch()
 
 
 ## 8. GitHub Repository Link :
-[]
+[https://github.com/Sai-tech-001/movie-collection-api.git]
 
 
 ## 9. Author Information
 
 Sai Ganesh P
+test in postman:
+
+http://localhost:3000/movies
+http://localhost:3000/movies/classics
+http://localhost:3000/movies/genres
+
+push to GitHub :
+
+    create a repository
+
+delete node-modules
+
+zip folder and submit
